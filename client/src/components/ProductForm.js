@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default () => {
+export default ({setLoaded}) => {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
@@ -13,6 +13,7 @@ export default () => {
             price,
             description
         })
+            .then(setLoaded(false))
             .then(res=>console.log(res))
             .catch(err=>console.log(err))
     }

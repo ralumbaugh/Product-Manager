@@ -15,3 +15,15 @@ module.exports.createProduct = (request, response) =>{
         .then(product => response.json(product))
         .catch(err => response.json(err));
 }
+
+module.exports.showAllProducts = (request,response) =>{
+    Product.find({})
+        .then(products => response.json(products))
+        .catch(err => response.json(err))
+}
+
+module.exports.showOneProduct = (request,response) =>{
+    Product.findOne({_id:request.params.id})
+        .then(person => response.json(person))
+        .catch(err => response.json(err))
+}
