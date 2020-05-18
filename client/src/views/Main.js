@@ -13,11 +13,12 @@ export default () => {
                 setLoaded(true);
             })
     }, [loaded])
+
     return(
         <div>
             <ProductForm setLoaded = {setLoaded}/>
             <hr/>
-            {loaded && <ProductList products = {products} />}
+            <ProductList products = {products} setLoaded = {setLoaded} />
         </div>
     )
 }
