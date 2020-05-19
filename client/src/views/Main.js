@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import ProductForm from '../components/ProductForm';
+import React from 'react';
+import SingleProductForm from '../components/SingleProductForm';
 import ProductList from '../components/ProductList';
-import Axios from 'axios';
+import axios from 'axios';
 
-export default () => {
-    const [products, setProducts] = useState([]);
-    const [loaded, setLoaded] = useState(false);
-    useEffect(()=>{
-        Axios.get('http://localhost:8000/api/products')
-            .then(res =>{
-                setProducts(res.data);
-                setLoaded(true);
+export default ({removeFromDom, products, setProducts, loaded}) => {
+
+    // const removeFromDom = productID => {
+    //     setProducts(products.filter(product => product._id !== productID));
+    // }
+
+    const createProduct = product => {
+        axios.post('http://localhost:8000/api/products', product)
+            .then(res=>{
+                setProducts([...products, res.data]);
             })
-    }, [loaded])
+    }
 
     return(
         <div>
-            <ProductForm setLoaded = {setLoaded}/>
+            <SingleProductForm onSubmitProp={createProduct} initialTitle="" initialPrice="" initialDescription=""/>
             <hr/>
-            <ProductList products = {products} setLoaded = {setLoaded} />
+            {loaded && <ProductList products={products} removeFromDom={removeFromDom} />}
         </div>
     )
 }
